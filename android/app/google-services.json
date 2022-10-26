@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "133510929871",
+    "project_id": "fir-remote-localization",
+    "storage_bucket": "fir-remote-localization.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:133510929871:android:19d6b00238fec5208186ba",
+        "android_client_info": {
+          "package_name": "com.example.demo_remote_localization"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "133510929871-5g2h1g6rg6065dua8c9c7a4argni614g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAohamv5WLtZ9wHT0frfD1-AtYgnDR1-s8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "133510929871-5g2h1g6rg6065dua8c9c7a4argni614g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
