@@ -1,5 +1,4 @@
-import 'dart:convert';
-
+import 'package:demo_remote_localization/app_localizations/app_localizations.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 
@@ -20,6 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      locale: const Locale('pt', 'BR'),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -41,6 +41,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   bool _isLoading = false;
 
+  @override
+  void initState() {
+    _forceFetch();
+    super.initState();
+  }
+
   void _forceFetch() async {
     setState(() => _isLoading = true);
     await remoteConfig.setConfigSettings(RemoteConfigSettings(
@@ -53,10 +59,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> ptBRTranslate = jsonDecode(remoteConfig.getString('en_US'));
     return Scaffold(
       appBar: AppBar(
-        title: Text(ptBRTranslate['appbar_title']!),
+        title: Text(AppLocalizations(context).hello),
         centerTitle: true,
       ),
       body: Center(
@@ -66,15 +71,26 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    ptBRTranslate['hello']!,
+                    AppLocalizations(context).appBarTitle,
                     style: const TextStyle(fontSize: 32),
+                  ),
+                  const SizedBox(height: 30),
+                  Text(
+                    AppLocalizations(context).welcome,
+                    style: const TextStyle(fontSize: 28),
+                  ),
+                  const SizedBox(height: 30),
+                  Text(
+                    AppLocalizations(context).yourName,
+                    style: const TextStyle(fontSize: 28),
+                  ),
+                  const SizedBox(height: 30),
+                  Text(
+                    AppLocalizations(context).aboutYou,
+                    style: const TextStyle(fontSize: 28),
                   ),
                 ],
               ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _forceFetch,
-        child: const Icon(Icons.restart_alt),
       ),
     );
   }
