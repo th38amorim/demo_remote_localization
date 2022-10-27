@@ -1,4 +1,10 @@
-import 'package:demo_remote_localization/app_localizations/app_localizations.dart';
+import 'package:demo_remote_localization/src/app/app.dart';
+import 'package:demo_remote_localization/src/home/home_controller.dart';
+import 'package:demo_remote_localization/src/home/home_service.dart';
+import 'package:demo_remote_localization/src/settings/settings_controller.dart';
+import 'package:demo_remote_localization/src/settings/settings_service.dart';
+
+import '../app_localizations.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 
@@ -18,13 +24,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      locale: const Locale('pt', 'BR'),
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(),
+      home: MyHomePage(),
     );
   }
 }
@@ -50,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _forceFetch() async {
     setState(() => _isLoading = true);
     await remoteConfig.setConfigSettings(RemoteConfigSettings(
-      fetchTimeout: const Duration(seconds: 10),
+      fetchTimeout: const Duration(milliseconds: 2),
       minimumFetchInterval: Duration.zero,
     ));
     await remoteConfig.fetchAndActivate();
@@ -59,38 +61,27 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    final settingsController = SettingsController(SettingsService());
+    final homeController = HomeController(HomeService());
+
+    settingsController.loadSettings();
+    homeController.initialize(context);
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations(context).hello),
-        centerTitle: true,
-      ),
       body: Center(
-        child: _isLoading
-            ? const CircularProgressIndicator()
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    AppLocalizations(context).appBarTitle,
-                    style: const TextStyle(fontSize: 32),
-                  ),
-                  const SizedBox(height: 30),
-                  Text(
-                    AppLocalizations(context).welcome,
-                    style: const TextStyle(fontSize: 28),
-                  ),
-                  const SizedBox(height: 30),
-                  Text(
-                    AppLocalizations(context).yourName,
-                    style: const TextStyle(fontSize: 28),
-                  ),
-                  const SizedBox(height: 30),
-                  Text(
-                    AppLocalizations(context).aboutYou,
-                    style: const TextStyle(fontSize: 28),
-                  ),
-                ],
-              ),
+        child: _isLoading ? const CircularProgressIndicator() : ElevatedButton(
+          child: Text(AppLocalizations(context).startDemo),
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MyAppDemo(
+                  settingsController: settingsController, 
+                  homeController: homeController,
+                )),
+              );
+          }
+        ),
       ),
     );
   }
