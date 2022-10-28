@@ -12,15 +12,7 @@ class ProgressWeekWidget extends StatefulWidget {
 class _ProgressWeekWidgetState extends State<ProgressWeekWidget> {
   @override
   Widget build(BuildContext context) {
-    final days = [
-      'AppLocalizations.of(context)!.mondayShort',
-      'AppLocalizations.of(context)!.tuesdayShort',
-      'AppLocalizations.of(context)!.wednesdayShort',
-      'AppLocalizations.of(context)!.thursdayShort',
-      'AppLocalizations.of(context)!.fridayShort',
-      'AppLocalizations.of(context)!.saturdayShort',
-      'AppLocalizations.of(context)!.sundayShort',
-    ];
+    final days = [];
 
     return Center(
       child: ConstrainedBox(

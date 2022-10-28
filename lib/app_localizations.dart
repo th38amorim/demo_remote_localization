@@ -1,5 +1,3 @@
-// ignore_for_file: file_names
-
 import 'dart:convert';
 
 import 'package:firebase_remote_config/firebase_remote_config.dart';
@@ -13,7 +11,7 @@ class  AppLocalizations {
 
   late Locale myLocale = Localizations.localeOf(context);
   
-  Map<String, dynamic> get applocalizations => jsonDecode(remoteConfig.getString('pt_BR'));
+  Map<String, dynamic> get applocalizations => jsonDecode(remoteConfig.getString('en_US'));
 
   String get startDemo => applocalizations["startDemo"] ?? "";
   String get email => applocalizations["email"] ?? "";
